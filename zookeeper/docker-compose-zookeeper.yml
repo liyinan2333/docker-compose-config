@@ -1,0 +1,44 @@
+version: '3.6'
+services:
+  zk1:
+    image: zookeeper
+    container_name: zk1
+    hostname: zk1
+    restart: always
+    ports:
+      - "2181:2181"
+      - "18081:8080"
+    environment:
+      ZOO_MY_ID: 1
+    volumes:
+      - "~/app/zk1/conf/zoo.cfg:/conf/zoo.cfg"
+      - "~/app/zk1/data:/data"
+      - "~/app/zk1/version-2:/datalog/version-2"
+  zk2:
+    image: zookeeper
+    container_name: zk2
+    hostname: zk2
+    restart: always
+    ports:
+      - "2182:2181"
+      - "18082:8080"
+    environment:
+      ZOO_MY_ID: 2
+    volumes:
+      - "~/app/zk2/conf/zoo.cfg:/conf/zoo.cfg"
+      - "~/app/zk2/data:/data"
+      - "~/app/zk2/version-2:/datalog/version-2"
+  zk3:
+    image: zookeeper
+    container_name: zk3
+    hostname: zk3
+    restart: always
+    ports:
+      - "2183:2181"
+      - "18083:8080"
+    environment:
+      ZOO_MY_ID: 3
+    volumes:
+      - "~/app/zk3/conf/zoo.cfg:/conf/zoo.cfg"
+      - "~/app/zk3/data:/data"
+      - "~/app/zk3/version-2:/datalog/version-2"
