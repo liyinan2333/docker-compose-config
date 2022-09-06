@@ -1,0 +1,41 @@
+version: '3'
+networks:
+  consul_net:
+
+services:
+  consul1:
+    image: consul
+    container_name: consul_server_1
+    command: agent -server -bootstrap-expect=3 -node=consul_server_1 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    networks:
+      - consul_net
+
+  consul2:
+    image: consul
+    container_name: consul_server_2
+    command: agent -server -retry-join=consul_server_1 -node=consul_server_2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul1
+    networks:
+      - consul_net
+
+  consul3:
+    image: consul
+    container_name: consul_server_3
+    command: agent -server -retry-join=consul_server_1 -node=consul_server_3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul1
+    networks:
+      - consul_net
+
+  consul4:
+    image: consul
+    container_name: consul_client
+    command: agent -retry-join=consul_server_1 -node=consul_client -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1 -ui
+    ports:
+    - 8500:8500
+    depends_on:
+      - consul2
+      - consul3
+    networks:
+      - consul_net
