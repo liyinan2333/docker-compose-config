@@ -1,0 +1,14 @@
+version: '3.6'
+services:
+  activemq:
+    image: webcenter/activemq
+    container_name: activemq
+    hostname: activemq
+    #restart: always
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    restart: "no"
+    volumes:
+      - "~/app/activemq/data:/data/activemq"
+      - "~/app/activemq/log:/var/log/activemq"
