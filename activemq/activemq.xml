@@ -82,11 +82,11 @@
 		<replicatedLevelDB
 			replicas="3"
 			sync="local_disk"
-			hostname="172.17.0.1"
-			bind="tcp://0.0.0.0:63633"
+			hostname="127.0.0.1"
+			bind="tcp://0.0.0.0:63631"
 			directory="${activemq.data}/leveldb"
 			zkPath="/activemq/leveldb-stores"
-			zkAddress="171.17.0.1:2181,172.17.0.1:2182,172.17.0.1:2183"/>
+			zkAddress="zk1:2181,zk2:2181,zk3:2181"/>
         </persistenceAdapter>
 
 

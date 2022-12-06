@@ -9,11 +9,15 @@ services:
     ports:
       - "61616:61616"
       - "8161:8161"
-      - "63631:63631"
+        #- "63631:63631"
     volumes:
       - "~/app/amq1/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq1/data:/data/activemq"
       - "~/app/amq1/log:/var/log/activemq"
+    depends_on:
+      - zk1
+      - zk2
+      - zk3
   amq2:
     image: webcenter/activemq
     container_name: amq2
@@ -22,11 +26,15 @@ services:
     ports:
       - "61617:61616"
       - "8162:8161"
-      - "63632:63632"
+        #- "63632:63632"
     volumes:
       - "~/app/amq2/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq2/data:/data/activemq"
       - "~/app/amq2/log:/var/log/activemq"
+    depends_on:
+      - zk1
+      - zk2
+      - zk3
   amq3:
     image: webcenter/activemq
     container_name: amq3
@@ -35,8 +43,12 @@ services:
     ports:
       - "61618:61616"
       - "8163:8161"
-      - "63633:63633"
+        # - "63633:63633"
     volumes:
       - "~/app/amq3/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq3/data:/data/activemq"
       - "~/app/amq3/log:/var/log/activemq"
+    depends_on:
+      - zk1
+      - zk2
+      - zk3
