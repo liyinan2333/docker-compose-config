@@ -22,7 +22,7 @@ services:
     ports:
       - "61617:61616"
       - "8162:8161"
-      - "63632:63631"
+      - "63632:63632"
     volumes:
       - "~/app/amq2/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq2/data:/data/activemq"
@@ -35,7 +35,7 @@ services:
     ports:
       - "61618:61616"
       - "8163:8161"
-      - "63633:63631"
+      - "63633:63633"
     volumes:
       - "~/app/amq3/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq3/data:/data/activemq"
