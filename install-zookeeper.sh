@@ -1,10 +1,5 @@
-mkdir -p ~/app/zk1/conf/
-mkdir -p ~/app/zk1/data/
-mkdir -p ~/app/zk2/conf/
-mkdir -p ~/app/zk2/data/
-mkdir -p ~/app/zk3/conf/
-mkdir -p ~/app/zk3/data/
-cp ./zookeeper/zoo.cfg ~/app/zk1/conf/zoo.cfg
-cp ./zookeeper/zoo.cfg ~/app/zk2/conf/zoo.cfg
-cp ./zookeeper/zoo.cfg ~/app/zk3/conf/zoo.cfg
-docker-compose -f zookeeper/docker-compose-zookeeper.yml up -d --remove-orphans
+count=3
+mkdir -pv `seq -f $HOME'/app/zk%1g/conf/conf' 1 $count`
+mkdir -pv `seq -f $HOME'/app/zk%1g/conf/data' 1 $count`
+find ~/app -wholename '*zk[1-3]/conf' | xargs -n 1 cp -v ./zookeeper/zoo.cfg
+docker-compose -f zookeeper/docker-compose-zookeeper.yml -f zookeeper/docker-compose-zookeeper.yml up -d --remove-orphans
