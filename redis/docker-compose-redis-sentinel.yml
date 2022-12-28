@@ -1,0 +1,44 @@
+version: "3.0"
+
+services:
+  redis_sentinel_1:
+    image: redis:6.0.16
+    container_name: redis_sentinel_1
+    ports:
+      - 26379:23679
+    volumes:
+      - ~/app/redis_sentinel_1/data:/data
+      - ~/app/redis_sentinel_1/etc/sentinel.conf:/etc/sentinel.conf
+    command: bash -c "redis-sentinel /etc/sentinel.conf && chmod 777 /etc/sentinel.conf"
+    depends_on:
+      - redis_node_1
+      - redis_node_2
+      - redis_node_3
+
+  redis_sentinel_2:
+    image: redis:6.0.16
+    container_name: redis_sentinel_2
+    ports:
+      - 26380:23679
+    volumes:
+      - ~/app/redis_sentinel_2/data:/data
+      - ~/app/redis_sentinel_2/etc/sentinel.conf:/etc/sentinel.conf
+    command: bash -c "redis-sentinel /etc/sentinel.conf && chmod 777 /etc/sentinel.conf"
+    depends_on:
+      - redis_node_1
+      - redis_node_2
+      - redis_node_3
+
+  redis_sentinel_3:
+    image: redis:6.0.16
+    container_name: redis_sentinel_3
+    ports:
+      - 26381:23679
+    volumes:
+      - ~/app/redis_sentinel_3/data:/data
+      - ~/app/redis_sentinel_3/etc/sentinel.conf:/etc/sentinel.conf
+    command: bash -c "redis-sentinel /etc/sentinel.conf && chmod 777 /etc/sentinel.conf"
+    depends_on:
+      - redis_node_1
+      - redis_node_2
+      - redis_node_3

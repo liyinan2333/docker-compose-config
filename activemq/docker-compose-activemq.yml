@@ -1,4 +1,9 @@
 version: '3.6'
+
+#networks:
+#  activemq:
+#    driver: bridge
+
 services:
   amq1:
     image: webcenter/activemq
@@ -6,6 +11,8 @@ services:
     hostname: amq1
     #restart: always
     restart: "no"
+    #    networks:
+    #  - activemq
     ports:
       - "61616:61616"
       - "8161:8161"
@@ -18,11 +25,14 @@ services:
       - zk1
       - zk2
       - zk3
+
   amq2:
     image: webcenter/activemq
     container_name: amq2
     hostname: amq2
     restart: "no"
+    #networks:
+    #  - activemq
     ports:
       - "61617:61616"
       - "8162:8161"
@@ -35,11 +45,14 @@ services:
       - zk1
       - zk2
       - zk3
+
   amq3:
     image: webcenter/activemq
     container_name: amq3
     hostname: amq3
     restart: "no"
+    #networks:
+    #  - activemq
     ports:
       - "61618:61616"
       - "8163:8161"
