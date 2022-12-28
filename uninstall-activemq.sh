@@ -1,15 +1,22 @@
+count=3
+container_short_name=amq
+container_full_name=activemq
+container_short_names=`seq -f $container_short_name'%1g' 1 $count`
+
 uninstall() {
-  echo 'Stopping amq cluster...'
-  docker stop amq1 amq2 amq3
-  echo 'Removing amq cluster...'
-  docker rm amq1 amq2 amq3
+  echo 'Stopping '$container_full_name' cluster...'
+  docker stop $container_short_names
+  echo 'Removing '$container_full_name' cluster...'
+  docker rm $container_short_names
   echo 'Uninstall success.'
 }
 
 delete_files() {
-  makesure 'Whether to delete config and data files? [Y/n] '
-  if [ $? = 1 ]; then
-    sudo rm -rf ~/app/amq{1..3}
+  makesure 'Do you want to delete configure and data files? [Y/n] '
+  if [ $? -eq 1 ]; then
+    echo 'Deleting files...'
+    dir=`seq -f $HOME'/app/'$container_short_name'%1g' 1 $count`;
+    echo $dir | xargs -n 1 sudo rm -rfv
   fi
   echo 'Done.'
 }
@@ -20,10 +27,11 @@ makesure() {
   case $input in
       [yY][eE][sS]|[yY])
         echo "Yes"
-        sudo rm -rf ~/app/amq{1..3}:
+	return 1
         ;;
       [nN][oO]|[nN])
         echo "No"
+	return 0
         ;;
       *)
         echo "Invalid input..."

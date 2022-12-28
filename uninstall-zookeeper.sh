@@ -1,16 +1,22 @@
+count=3
+container_short_name=zk
+container_full_name=zookeeper
+container_short_names=`seq -f $container_short_name'%1g' 1 $count`
+
 uninstall() {
-  echo 'Stopping zookeeper cluster...'
-  docker stop zk1 zk2 zk3
-  echo 'Removing zookeeper cluster...'
-  docker rm zk1 zk2 zk3
+  echo 'Stopping '$container_full_name' cluster...'
+  docker stop $container_short_names
+  echo 'Removing '$container_full_name' cluster...'
+  docker rm $container_short_names
   echo 'Uninstall success.'
 }
 
 delete_files() {
-  makesure 'Whether to delete config and data files? [Y/n] '
+  makesure 'Do you want to delete configure and data files? [Y/n] '
   if [ $? -eq 1 ]; then
     echo 'Deleting files...'
-    sudo rm -rf $HOME/app/zk{1..3}
+    dir=`seq -f $HOME'/app/'$container_short_name'%1g' 1 $count`;
+    echo $dir | xargs -n 1 sudo rm -rfv
   fi
   echo 'Done.'
 }
