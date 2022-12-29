@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.6"
 
 services:
   redis_sentinel_1:
@@ -8,8 +8,8 @@ services:
       - 26379:23679
     volumes:
       - ~/app/redis_sentinel_1/data:/data
-      - ~/app/redis_sentinel_1/etc/sentinel.conf:/etc/sentinel.conf
-    command: bash -c "redis-sentinel /etc/sentinel.conf && chmod 777 /etc/sentinel.conf"
+      - ~/app/redis_sentinel_1/conf:/conf
+    command: bash -c "redis-sentinel /conf/sentinel.conf && chmod 777 /conf/sentinel.conf"
     depends_on:
       - redis_node_1
       - redis_node_2
@@ -22,8 +22,8 @@ services:
       - 26380:23679
     volumes:
       - ~/app/redis_sentinel_2/data:/data
-      - ~/app/redis_sentinel_2/etc/sentinel.conf:/etc/sentinel.conf
-    command: bash -c "redis-sentinel /etc/sentinel.conf && chmod 777 /etc/sentinel.conf"
+      - ~/app/redis_sentinel_2/conf:/conf
+    command: bash -c "redis-sentinel /conf/sentinel.conf && chmod 777 /conf/sentinel.conf"
     depends_on:
       - redis_node_1
       - redis_node_2
@@ -36,8 +36,8 @@ services:
       - 26381:23679
     volumes:
       - ~/app/redis_sentinel_3/data:/data
-      - ~/app/redis_sentinel_3/etc/sentinel.conf:/etc/sentinel.conf
-    command: bash -c "redis-sentinel /etc/sentinel.conf && chmod 777 /etc/sentinel.conf"
+      - ~/app/redis_sentinel_3/conf:/conf
+    command: bash -c "redis-sentinel /conf/sentinel.conf && chmod 777 /conf/sentinel.conf"
     depends_on:
       - redis_node_1
       - redis_node_2
