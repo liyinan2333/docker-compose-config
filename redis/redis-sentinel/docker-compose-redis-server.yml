@@ -1,0 +1,32 @@
+version: "3.6"
+ 
+services:
+  redis_server_1:
+    image: redis:6.0.16
+    container_name: redis_server_1  #镜像运行后的容器名，自定义
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/app/redis_server_1/conf:/conf
+      - ~/app/redis_server_1/data:/data
+    command: bash -c "redis-server /conf/redis.conf"  #容器启动后，运行的命令
+ 
+  redis_server_2:
+    image: redis:6.0.16
+    container_name: redis_server_2
+    ports:
+      - 6380:6379
+    volumes:
+      - ~/app/redis_server_2/conf:/conf
+      - ~/app/redis_server_2/data:/data
+    command: bash -c "redis-server /conf/redis.conf  --slaveof redis_server_1 6379"
+ 
+  redis_server_3:
+    image: redis:6.0.16
+    container_name: redis_server_3
+    ports:
+      - 6381:6379
+    volumes:
+      - ~/app/redis_server_3/conf:/conf
+      - ~/app/redis_server_3/data:/data
+    command: bash -c "redis-server /conf/redis.conf --slaveof redis_server_1 6379"

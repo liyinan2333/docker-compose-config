@@ -11,9 +11,9 @@ services:
       - ~/app/redis_sentinel_1/conf:/conf
     command: bash -c "redis-sentinel /conf/sentinel.conf && chmod 777 /conf/sentinel.conf"
     depends_on:
-      - redis_node_1
-      - redis_node_2
-      - redis_node_3
+      - redis_server_1
+      - redis_server_2
+      - redis_server_3
 
   redis_sentinel_2:
     image: redis:6.0.16
@@ -25,9 +25,9 @@ services:
       - ~/app/redis_sentinel_2/conf:/conf
     command: bash -c "redis-sentinel /conf/sentinel.conf && chmod 777 /conf/sentinel.conf"
     depends_on:
-      - redis_node_1
-      - redis_node_2
-      - redis_node_3
+      - redis_server_1
+      - redis_server_2
+      - redis_server_3
 
   redis_sentinel_3:
     image: redis:6.0.16
@@ -39,6 +39,6 @@ services:
       - ~/app/redis_sentinel_3/conf:/conf
     command: bash -c "redis-sentinel /conf/sentinel.conf && chmod 777 /conf/sentinel.conf"
     depends_on:
-      - redis_node_1
-      - redis_node_2
-      - redis_node_3
+      - redis_server_1
+      - redis_server_2
+      - redis_server_3

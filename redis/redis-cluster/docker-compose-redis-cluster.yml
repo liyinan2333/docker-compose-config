@@ -1,0 +1,106 @@
+version: "3.6"
+ 
+networks:
+  redis:
+    ipam:
+      config:
+        - subnet: 172.79.0.0/16
+
+services:
+  redis_cluster:
+    image: redis:6.2.1
+    networks:
+      redis:
+        ipv4_address: 172.79.0.2
+    command: redis-cli --cluster create 172.79.0.11:6379 172.79.0.12:6379 172.79.0.13:6379 172.79.0.14:6379 172.79.0.15:6379 172.79.0.16:6379 --cluster-replicas 1  --cluster-yes
+    depends_on:
+      - redis_node_1
+      - redis_node_2
+      - redis_node_3
+      - redis_node_4
+      - redis_node_5
+      - redis_node_6
+
+  redis_node_1:
+    image: redis:6.2.1
+    container_name: redis_node_1
+    networks:
+      redis:
+        ipv4_address: 172.79.0.11
+    ports:
+    - 6381:6379
+    - 16381:16379   #集群总线端口 默认就是redis端口加1000，每个节点都要打开
+    volumes:
+    - ~/app/redis_node_1/conf:/conf
+    - ~/app/redis_node_1/data:/data
+    command: redis-server /conf/redis.conf
+ 
+  redis_node_2:
+    image: redis:6.2.1
+    container_name: redis_node_2
+    networks:
+      redis:
+        ipv4_address: 172.79.0.12
+    ports:
+      - 6382:6379
+      - 16382:16379
+    volumes:
+      - ~/app/redis_node_2/conf:/conf
+      - ~/app/redis_node_2/data:/data
+    command: redis-server /conf/redis.conf
+ 
+  redis_node_3:
+    image: redis:6.2.1
+    container_name: redis_node_3
+    networks:
+      redis:
+        ipv4_address: 172.79.0.13
+    ports:
+      - 6383:6379
+      - 16383:16379
+    volumes:
+      - ~/app/redis_node_3/conf:/conf
+      - ~/app/redis_node_3/data:/data
+    command: redis-server /conf/redis.conf
+
+  redis_node_4:
+    image: redis:6.2.1
+    container_name: redis_node_4
+    networks:
+      redis:
+        ipv4_address: 172.79.0.14
+    ports:
+    - 6384:6379
+    - 16384:16379
+    volumes:
+    - ~/app/redis_node_4/conf:/conf
+    - ~/app/redis_node_4/data:/data
+    command: redis-server /conf/redis.conf
+
+  redis_node_5:
+    image: redis:6.2.1
+    container_name: redis_node_5
+    networks:
+      redis:
+        ipv4_address: 172.79.0.15
+    ports:
+      - 6385:6379
+      - 16385:16379
+    volumes:
+      - ~/app/redis_node_5/conf:/conf
+      - ~/app/redis_node_5/data:/data
+    command: redis-server /conf/redis.conf
+
+  redis_node_6:
+    image: redis:6.2.1
+    container_name: redis_node_6
+    networks:
+      redis:
+        ipv4_address: 172.79.0.16
+    ports:
+      - 6386:6379
+      - 16386:16379
+    volumes:
+      - ~/app/redis_node_6/conf:/conf
+      - ~/app/redis_node_6/data:/data
+    command: redis-server /conf/redis.conf
