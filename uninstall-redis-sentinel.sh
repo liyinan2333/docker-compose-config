@@ -13,6 +13,8 @@ uninstall() {
   docker rm $sentinel_names
   echo 'Removing redis servers...'
   docker rm $server_names
+  echo 'Removing network redis-sentinel_redis...'
+  docker network rm redis-sentinel_redis
   echo 'Uninstall success.'
 }
 

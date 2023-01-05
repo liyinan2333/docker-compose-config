@@ -7,6 +7,9 @@ uninstall() {
   docker stop $container_names
   echo 'Removing redis cluster...'
   docker rm $container_names
+  docker rm redis_cluster
+  echo 'Removing network redis-cluster_redis'
+  docker network rm redis-cluster_redis
   echo 'Uninstall success.'
 }
 
