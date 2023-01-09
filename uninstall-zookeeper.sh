@@ -1,24 +1,27 @@
 count=3
+network_name=zookeeper
 container_short_name=zk
 container_full_name=zookeeper
-container_short_names=`seq -f $container_short_name'%1g' 1 $count`
+container_short_names=`seq -f "$container_short_name%1g" 1 $count`
 
 uninstall() {
-  echo 'Stopping '$container_full_name' cluster...'
+  echo "Stopping $container_full_name cluster..."
   docker stop $container_short_names
-  echo 'Removing '$container_full_name' cluster...'
+  echo "Removing $container_full_name cluster..."
   docker rm $container_short_names
-  echo 'Uninstall success.'
+  echo "Removing network zookeeper..."
+  docker network rm $network_name
+  echo "Uninstall success."
 }
 
 delete_files() {
-  makesure 'Do you want to delete configure and data files? [Y/n] '
+  makesure "Do you want to delete configure and data files? [Y/n] "
   if [ $? -eq 1 ]; then
-    echo 'Deleting files...'
-    dir=`seq -f $HOME'/app/'$container_short_name'%1g' 1 $count`;
+    echo "Deleting files..."
+    dir=`seq -f "$HOME/app/$container_short_name%1g" 1 $count`;
     echo $dir | xargs -n 1 sudo rm -rfv
   fi
-  echo 'Done.'
+  echo "Done."
 }
 
 makesure() {

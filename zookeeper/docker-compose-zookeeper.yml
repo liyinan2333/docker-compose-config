@@ -1,8 +1,8 @@
 version: '3.6'
 
-#networks:
-#  zookeeper:
-#    driver: bridge
+networks:
+  zookeeper:
+    external: true
 
 services:
   zk1:
@@ -10,8 +10,8 @@ services:
     container_name: zk1
     hostname: zk1
     #restart: always
-    #    networks:
-    #  - zookeeper
+    networks:
+      - zookeeper
     ports:
       - "2181:2181"
       - "18081:8080"
@@ -26,8 +26,8 @@ services:
     container_name: zk2
     hostname: zk2
     #restart: always
-    #networks:
-    #  - zookeeper
+    networks:
+      - zookeeper
     ports:
       - "2182:2181"
       - "18082:8080"
@@ -42,8 +42,8 @@ services:
     container_name: zk3
     hostname: zk3
     #restart: always
-    #networks:
-    #  - zookeeper
+    networks:
+      - zookeeper
     ports:
       - "2183:2181"
       - "18083:8080"

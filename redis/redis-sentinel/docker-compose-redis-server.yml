@@ -1,9 +1,18 @@
 version: "3.6"
+
+networks:
+  redis:
+    ipam:
+      config:
+        - subnet: 172.79.0.0/16
  
 services:
   redis_server_1:
     image: redis:6.0.16
     container_name: redis_server_1  #镜像运行后的容器名，自定义
+    networks:
+      redis:
+        ipv4_address: 172.79.0.11
     ports:
       - 6379:6379
     volumes:
@@ -14,6 +23,9 @@ services:
   redis_server_2:
     image: redis:6.0.16
     container_name: redis_server_2
+    networks:
+      redis:
+        ipv4_address: 172.79.0.12
     ports:
       - 6380:6379
     volumes:
@@ -24,6 +36,9 @@ services:
   redis_server_3:
     image: redis:6.0.16
     container_name: redis_server_3
+    networks:
+      redis:
+        ipv4_address: 172.79.0.13
     ports:
       - 6381:6379
     volumes:

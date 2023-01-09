@@ -1,4 +1,5 @@
 count=3
+network_name=activemq_default
 container_short_name=amq
 container_full_name=activemq
 container_short_names=`seq -f $container_short_name'%1g' 1 $count`
@@ -8,6 +9,8 @@ uninstall() {
   docker stop $container_short_names
   echo 'Removing '$container_full_name' cluster...'
   docker rm $container_short_names
+  echo 'Removing network '$network_name'...'
+  docker network rm $network_name
   echo 'Uninstall success.'
 }
 
