@@ -1,4 +1,5 @@
 count=3
+zookeeper_count=3
 network_name=activemq
 container_short_name=amq
 container_full_name=activemq
@@ -9,6 +10,8 @@ uninstall() {
   docker stop $container_short_names
   echo "Removing $container_full_name cluster..."
   docker rm $container_short_names
+  echo "Disconnecting network zookeeper from activemq..."
+  echo `seq -f "zk%1g" 1 $zookeeper_count` | xargs -n1 | xargs -i docker network disconnect activemq {} 
   echo "Removing network $network_name..."
   docker network rm $network_name
   echo "Uninstall success."

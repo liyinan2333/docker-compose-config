@@ -21,10 +21,6 @@ services:
       - "~/app/amq1/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq1/data:/data/activemq"
       - "~/app/amq1/log:/var/log/activemq"
-    depends_on:
-      - zk1
-      - zk2
-      - zk3
 
   amq2:
     image: webcenter/activemq
@@ -41,10 +37,6 @@ services:
       - "~/app/amq2/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq2/data:/data/activemq"
       - "~/app/amq2/log:/var/log/activemq"
-    depends_on:
-      - zk1
-      - zk2
-      - zk3
 
   amq3:
     image: webcenter/activemq
@@ -61,7 +53,3 @@ services:
       - "~/app/amq3/conf/activemq.xml:/opt/activemq/conf/activemq.xml"
       - "~/app/amq3/data:/data/activemq"
       - "~/app/amq3/log:/var/log/activemq"
-    depends_on:
-      - zk1
-      - zk2
-      - zk3
