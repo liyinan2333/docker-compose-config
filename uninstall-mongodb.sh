@@ -1,16 +1,13 @@
-node_count=6
-container_name=redis_node_
-container_names=`seq -f "$container_name%1g" 1 $node_count`
+count=1
+container_short_name=mongodb
+container_full_name=mongodb
+container_short_names=`seq -f "$container_short_name%1g" 1 $count`
 
 uninstall() {
-  echo "Stopping redis cluster..."
-  docker stop $container_names
-  docker stop redis_cluster
-  echo "Removing redis cluster..."
-  docker rm $container_names
-  docker rm redis_cluster
-  echo "Removing network redis-cluster_redis"
-  docker network rm redis-cluster_redis
+  echo "Stopping $container_full_name..."
+  docker stop $container_short_name
+  echo "Removing $container_full_name..."
+  docker rm $container_short_name
   echo "Uninstall success."
 }
 
@@ -18,8 +15,8 @@ delete_files() {
   makesure "Do you want to delete configure and data files? [Y/n] "
   if [ $? -eq 1 ]; then
     echo "Deleting files..."
-    dir_nodes=`seq -f "$HOME/app/$container_name%1g" 1 $node_count`;
-    echo $dir_nodes | xargs -n 1 sudo rm -rfv
+    dir="$HOME/app/$container_short_name"
+    echo $dir | xargs -n 1 sudo rm -rfv
   fi
   echo "Done."
 }

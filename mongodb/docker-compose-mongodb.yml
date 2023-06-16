@@ -1,0 +1,27 @@
+version: '3.6'
+
+networks:
+  generic:
+    external: true
+services:
+  mongodb:
+    image: mongo:5.0.10-focal
+    container_name: mongodb
+    #使用该参数，container内的root拥有真正的root权限，否则，container内的root只是外部的一个普通用户权限
+    #设置为true，不然数据卷可能挂载不了，启动不起
+    privileged: true
+    networks:
+      - generic
+    ports:
+      - "27017:27017"
+    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: "x+s9zI&VA!s"
+      wiredTigerCacheSizeGB: 2
+      TZ: Asia/Shanghai
+#    command:
+#      - "--auth"
+    volumes:
+      #映射mysql的数据目录到宿主机，保存数据
+      - "~/app/mongodb/data:/data/db"
+      - "~/app/mongodb/logs:/var/log/mongodb"
