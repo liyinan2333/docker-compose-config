@@ -5,7 +5,7 @@ networks:
     external: true
 services:
   mongodb:
-    image: mongo:5.0.10-focal
+    image: mongo:latest
     container_name: mongodb
     #使用该参数，container内的root拥有真正的root权限，否则，container内的root只是外部的一个普通用户权限
     #设置为true，不然数据卷可能挂载不了，启动不起
@@ -25,3 +25,19 @@ services:
       #映射mysql的数据目录到宿主机，保存数据
       - "~/app/mongodb/data:/data/db"
       - "~/app/mongodb/logs:/var/log/mongodb"
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express  
+    networks:
+      - generic
+    ports:
+      - "27018:8081"
+    environment:
+#      ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
+      ME_CONFIG_MONGODB_SERVER: mongodb
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
+#      ME_CONFIG_BASICAUTH_USERNAME: admin
+#      ME_CONFIG_BASICAUTH_PASSWORD: 123456
+    depends_on:
+      - mongodb

@@ -2,11 +2,14 @@ count=1
 container_short_name=mongodb
 container_full_name=mongodb
 container_short_names=`seq -f "$container_short_name%1g" 1 $count`
+container_manager_name=mongo-express
 
 uninstall() {
   echo "Stopping $container_full_name..."
+  docker stop $container_manager_name
   docker stop $container_short_name
   echo "Removing $container_full_name..."
+  docker rm $container_manager_name
   docker rm $container_short_name
   echo "Uninstall success."
 }
